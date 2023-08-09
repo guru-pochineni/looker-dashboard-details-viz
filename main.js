@@ -7,6 +7,7 @@ const visObject = {
 	},
 
 	updateAsync: function(data, element, config, queryResponse, details, doneRendering){
+        element.innerHTML = "";
         const firstLabel = queryResponse.fields.dimensions[0].name;
         const secondLabel = queryResponse.fields.dimensions[1].name;
         const thirdLabel = queryResponse.fields.dimensions[2].name;
