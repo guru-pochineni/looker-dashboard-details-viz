@@ -45,8 +45,6 @@ const visObject = {
             }
         }
 
-        console.log(transformedData, onlySummary)
-
         const visDiv = document.createElement("div");
         visDiv.setAttribute('style', 'display: flex; flex-wrap: wrap; justify-content: space-around; align-items: stretch; gap:15px');
 
@@ -75,11 +73,10 @@ const visObject = {
             else {
                 for(const nestedKey in transformedData[key]) {
                     const flexDetails = document.createElement("details");
-                    flexDetails.setAttribute("style", "list-style:None;");
                     const flexSummary = document.createElement("summary");
                     flexSummary.setAttribute("style", "list-style:None;");
                     const flexSummaryStrong = document.createElement("strong");
-                    flexSummaryStrong.setAttribute("style", "color:#0087e1;");
+                    flexSummaryStrong.setAttribute("style", "color:#0000ee;");
                     flexSummaryStrong.innerText = nestedKey;
                     flexSummary.appendChild(flexSummaryStrong);
                     flexDetails.appendChild(flexSummary);
