@@ -1,0 +1,233 @@
+[
+    {
+        "looker_dashboards_list.category": {
+            "value": "Category 1"
+        },
+        "looker_dashboards_list.sub_category": {
+            "value": "1. Sub Category 1"
+        },
+        "looker_dashboards_list.Dashboard": {
+            "value": "Dashboard Name 1",
+            "links": [
+                {
+                    "label": "Click to access dashboard",
+                    "url": "https:google.com",
+                    "type": "url"
+                }
+            ]
+        },
+        "looker_dashboards_list.category_order": {
+            "value": 1
+        }
+    },
+    {
+        "looker_dashboards_list.category": {
+            "value": "Category 1"
+        },
+        "looker_dashboards_list.sub_category": {
+            "value": "1. Sub Category 1"
+        },
+        "looker_dashboards_list.Dashboard": {
+            "value": "Dashboard Name 2",
+            "links": [
+                {
+                    "label": "Click to access dashboard",
+                    "url": "https:google.com",
+                    "type": "url"
+                }
+            ]
+        },
+        "looker_dashboards_list.category_order": {
+            "value": 1
+        }
+    },
+    {
+        "looker_dashboards_list.category": {
+            "value": "Category 1"
+        },
+        "looker_dashboards_list.sub_category": {
+            "value": "1. Sub Category 1"
+        },
+        "looker_dashboards_list.Dashboard": {
+            "value": "Dashboard Name 3",
+            "links": [
+                {
+                    "label": "Click to access dashboard",
+                    "url": "https:google.com",
+                    "type": "url"
+                }
+            ]
+        },
+        "looker_dashboards_list.category_order": {
+            "value": 1
+        }
+    },
+    {
+        "looker_dashboards_list.category": {
+            "value": "Category 1"
+        },
+        "looker_dashboards_list.sub_category": {
+            "value": "1. Sub Category 2"
+        },
+        "looker_dashboards_list.Dashboard": {
+            "value": "Dashboard Name 1",
+            "links": [
+                {
+                    "label": "Click to access dashboard",
+                    "url": "https:google.com",
+                    "type": "url"
+                }
+            ]
+        },
+        "looker_dashboards_list.category_order": {
+            "value": 1
+        }
+    },
+    {
+        "looker_dashboards_list.category": {
+            "value": "Category 1"
+        },
+        "looker_dashboards_list.sub_category": {
+            "value": "1. Sub Category 3"
+        },
+        "looker_dashboards_list.Dashboard": {
+            "value": "Dashboard Name 1",
+            "links": [
+                {
+                    "label": "Click to access dashboard",
+                    "url": "https:google.com",
+                    "type": "url"
+                }
+            ]
+        },
+        "looker_dashboards_list.category_order": {
+            "value": 1
+        }
+    },
+    {
+        "looker_dashboards_list.category": {
+            "value": "Category 2"
+        },
+        "looker_dashboards_list.sub_category": {
+            "value": "1. Sub Category 1"
+        },
+        "looker_dashboards_list.Dashboard": {
+            "value": "Dashboard Name 1",
+            "links": [
+                {
+                    "label": "Click to access dashboard",
+                    "url": "https:google.com",
+                    "type": "url"
+                }
+            ]
+        },
+        "looker_dashboards_list.category_order": {
+            "value": 2
+        }
+    },
+    {
+        "looker_dashboards_list.category": {
+            "value": "Category 2"
+        },
+        "looker_dashboards_list.sub_category": {
+            "value": "1. Sub Category 2"
+        },
+        "looker_dashboards_list.Dashboard": {
+            "value": "Dashboard Name 1",
+            "links": [
+                {
+                    "label": "Click to access dashboard",
+                    "url": "https:google.com",
+                    "type": "url"
+                }
+            ]
+        },
+        "looker_dashboards_list.category_order": {
+            "value": 2
+        }
+    },
+    {
+        "looker_dashboards_list.category": {
+            "value": "Category 2"
+        },
+        "looker_dashboards_list.sub_category": {
+            "value": "1. Sub Category 3"
+        },
+        "looker_dashboards_list.Dashboard": {
+            "value": "Dashboard Name 1",
+            "links": [
+                {
+                    "label": "Click to access dashboard",
+                    "url": "https:google.com",
+                    "type": "url"
+                }
+            ]
+        },
+        "looker_dashboards_list.category_order": {
+            "value": 2
+        }
+    },
+    {
+        "looker_dashboards_list.category": {
+            "value": "Category 3"
+        },
+        "looker_dashboards_list.sub_category": {
+            "value": "Category 3"
+        },
+        "looker_dashboards_list.Dashboard": {
+            "value": "Major Dash",
+            "links": [
+                {
+                    "label": "Click to access dashboard",
+                    "url": "/dashboard/1",
+                    "type": "url"
+                }
+            ]
+        },
+        "looker_dashboards_list.category_order": {
+            "value": 3
+        }
+    },
+    {
+        "looker_dashboards_list.category": {
+            "value": "Category 4"
+        },
+        "looker_dashboards_list.sub_category": {
+            "value": "1. Sub Category 1"
+        },
+        "looker_dashboards_list.Dashboard": {
+            "value": "Dashboard Name 1",
+            "links": [
+                {
+                    "label": "Click to access dashboard",
+                    "url": "https:google.com",
+                    "type": "url"
+                }
+            ]
+        },
+        "looker_dashboards_list.category_order": {
+            "value": 4
+        }
+    },
+    {
+        "looker_dashboards_list.category": {
+            "value": "Category 4"
+        },
+        "looker_dashboards_list.sub_category": {
+            "value": "1. Sub Category 2"
+        },
+        "looker_dashboards_list.Dashboard": {
+            "value": "Dashboard Name 1",
+            "links": [
+                {
+                    "label": "Click to access dashboard",
+                    "url": "https:google.com",
+                    "type": "url"
+                }
+            ]
+        },
+        "looker_dashboards_list.category_order": {
+            "value": 4
+        }
+    }
+]

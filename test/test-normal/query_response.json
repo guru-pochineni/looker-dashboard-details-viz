@@ -1,0 +1,89 @@
+{
+    "parent_id": "38081b81b04bf96687c98c5b4e292aad",
+    "sql_changed": false,
+    "added_params": null,
+    "drill_menu_build_time": 0.018342,
+    "expired": false,
+    "fields": {
+        "dimensions": [
+            {
+                "sql": "${TABLE}.category ",
+                "view": "looker_dashboards_list",
+                "dimension_group": null,
+                "category": "dimension",
+                "field_group_label": null,
+                "name": "looker_dashboards_list.category",
+                "type": "string",
+                "view_label": "Looker Dashboards List",
+                "label": "Looker Dashboards List Category",
+                "field_group_variant": "Category",
+                "hidden": false,
+                "description": null
+            },
+            {
+                "sql": "${TABLE}.sub_category ",
+                "view": "looker_dashboards_list",
+                "dimension_group": null,
+                "category": "dimension",
+                "field_group_label": null,
+                "name": "looker_dashboards_list.sub_category",
+                "type": "string",
+                "view_label": "Looker Dashboards List",
+                "label": "Looker Dashboards List Sub Category",
+                "field_group_variant": "Sub Category",
+                "hidden": false,
+                "description": null
+            },
+            {
+                "sql": "${TABLE}.dashboard_title ",
+                "view": "looker_dashboards_list",
+                "dimension_group": null,
+                "category": "dimension",
+                "field_group_label": null,
+                "name": "looker_dashboards_list.Dashboard",
+                "type": "string",
+                "view_label": "Looker Dashboards List",
+                "label": "Looker Dashboards List Dashboard",
+                "field_group_variant": "Dashboard",
+                "hidden": false,
+                "description": null
+            },
+            {
+                "sql": "${TABLE}.category_order ",
+                "view": "looker_dashboards_list",
+                "dimension_group": null,
+                "category": "dimension",
+                "field_group_label": null,
+                "name": "looker_dashboards_list.category_order",
+                "type": "number",
+                "view_label": "Looker Dashboards List",
+                "label": "Looker Dashboards List Category Order",
+                "field_group_variant": "Category Order",
+                "hidden": false,
+                "description": null
+            }
+        ],
+        "measures": [],
+        "pivots": []
+    },
+    "fill_fields": [],
+    "has_row_totals": false,
+    "has_totals": false,
+    "id": "query-result-11",
+    "null_sort_treatment": "low",
+    "ran_at": "2019-04-10T23:54:57-07:00",
+    "runtime": "0.273",
+    "sql": "SELECT \n\tgame.friendly_class  AS `game.friendly_class`,\n\tgame.opponent_class  AS `game.opponent_class`,\n\tCOUNT(*) AS `game.count`\nFROM hs_stats.game  AS game\n\nGROUP BY 1,2\nORDER BY COUNT(*) DESC\nLIMIT 500",
+    "sql_explain": "EXPLAIN SELECT \n\tgame.friendly_class  AS `game.friendly_class`,\n\tgame.opponent_class  AS `game.opponent_class`,\n\tCOUNT(*) AS `game.count`\nFROM hs_stats.game  AS game\n\nGROUP BY 1,2\nORDER BY COUNT(*) DESC\nLIMIT 500",
+    "supports_pivot_in_db": true,
+    "timezone": "America/Los_Angeles",
+    "is_local": true,
+    "table_calcs_complete": true,
+    "tracked_attributes": {
+        "result.drill_menu_build_time": 0.018342,
+        "result.from_cache": true,
+        "result.runtime": "0.273",
+        "result.sql.length": 204,
+        "result.supports_pivot_in_db": true
+    }
+}
