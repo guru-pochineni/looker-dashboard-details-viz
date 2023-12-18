@@ -8,6 +8,15 @@ const visObject = {
                 .dashboard-details-vis {
                     font-family: Google Sans, Noto Sans, Noto Sans JP, Noto Sans KR, Noto Naskh Arabic, Noto Sans Thai, Noto Sans Hebrew, Noto Sans Bengali, sans-serif;
                     color: rgb(28, 34, 38);
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-around;
+                    align-items: stretch;
+                    gap:15px;
+                }
+
+                li {
+                    display: flex;
                 }
 
                 li:hover, summary:hover {
@@ -16,10 +25,34 @@ const visObject = {
 
                 a {
                     color: inherit;
+                    margin-left: 12px;
+                    display: list-item;
+                    width: 100%;
+                }
+
+                .category-card {
+                    padding-left: 12px;
+                    padding-right: 10px;
+                    flex: 1 1 0px;
+                    background-color: #ffffff;
+                    border-color: rgb(38, 48, 51);
+                    border-radius: 6px;
+                    border-bottom-width: 0px;
+                    border-left-width: 0px;
+                    border-right-width: 0px;
+                    box-shadow: rgba(0, 0, 0, 0.11) 0px 2px 12px, rgba(0, 0, 0, 0.04) 0px 1px 4px;
+                    padding-bottom: 10px;
+                }
+
+                .category-card-title {
+                    text-align: center;
+                    font-weight: 500;
+                    line-height: 2;
+                    color: rgb(38, 48, 51);
+                    font-size: 1.3rem;
                 }
             </style>
         `;
-
         this._visContainer = element.appendChild(document.createElement("div"));
         this._visContainer.className = "dashboard-details-vis";
     },
@@ -50,8 +83,6 @@ const visObject = {
                 }
             }
         }
-
-        console.log(currentDashboardTitle);
 
         const transformedData = {}
         const onlySummary = {}
@@ -86,16 +117,6 @@ const visObject = {
             }
         }
 
-        const visDiv = document.createElement("div");
-        visDiv.setAttribute('style', `
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            align-items: stretch;
-            gap:15px;
-           `);
-
-
         const get_analytics_data = (url) => {
 
             return {
@@ -104,7 +125,6 @@ const visObject = {
                 "env": "beta",
                 "userId": "0",
                 "teamId": "0",
-                "propertyVersion": "10.20.3-beta714271-231124-1838;Edge;119.0.0.0",
                 "property": "postman-web",
                 "timestamp": new Date().toISOString(),
                 "sessionId": "",
@@ -131,13 +151,14 @@ const visObject = {
 
                 anchorEle.innerText = val['value'];
                 anchorEle.onclick = (e) => {
-                    console.log('clicked');
+                    e.preventDefault();
                     fetch("https://events.getpostman-beta.com/events", {
                         method: "POST",
                         headers: {
                           "Content-Type": "application/json",
                         },
-                        body: JSON.stringify(get_analytics_data(url)),
+                        mode: "no-cors",
+                        body: btoa(JSON.stringify(get_analytics_data(url))),
                     });
                 }
 
@@ -148,25 +169,10 @@ const visObject = {
         for (const key in transformedData) {
 
             const flexDiv = document.createElement("div");
-            flexDiv.setAttribute('style', `
-                padding-left: 12px;
-                flex: 1 1 0px;
-                background-color: #ffffff;
-                border-color: rgb(38, 48, 51);
-                border-radius: 6px;
-                border-bottom-width: 0px;
-                border-left-width: 0px;
-                border-right-width: 0px;
-                box-shadow: rgba(0, 0, 0, 0.11) 0px 2px 12px, rgba(0, 0, 0, 0.04) 0px 1px 4px;
-            `);
+            flexDiv.setAttribute('class', 'category-card');
 
             const flexDivTitle = document.createElement("div");
-            flexDivTitle.setAttribute('style', `
-                text-align: center;
-                font-weight: 500;
-                line-height: 2.25;
-                color: rgb(38, 48, 51);
-            `);
+            flexDivTitle.setAttribute('class', 'category-card-title');
             flexDivTitle.innerText = key;
             flexDiv.appendChild(flexDivTitle);
 
@@ -208,10 +214,8 @@ const visObject = {
                     flexDiv.appendChild(flexDetails);
                 }
             }
-            visDiv.appendChild(flexDiv);
+            this._visContainer.appendChild(flexDiv);
         }
-
-        this._visContainer.appendChild(visDiv);
 
         doneRendering();
     }
