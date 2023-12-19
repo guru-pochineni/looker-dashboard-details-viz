@@ -5,52 +5,35 @@ const visObject = {
     create: function (element, config) {
         let css = element.innerHTML = `
             <style>
-                .dashboard-details-vis {
-                    font-family: Google Sans, Noto Sans, Noto Sans JP, Noto Sans KR, Noto Naskh Arabic, Noto Sans Thai, Noto Sans Hebrew, Noto Sans Bengali, sans-serif;
-                    color: rgb(28, 34, 38);
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: space-around;
-                    align-items: stretch;
-                    gap:15px;
-                }
 
-                li {
-                    display: flex;
-                }
+            body {
+                overflow: hidden;
+            }
 
-                li:hover, summary:hover {
-                    background-color: rgb(234, 235, 235);
-                }
+             #metadata {
+                border: 1px solid black;
+                padding: 10px;
+                margin: 10px;
+                grid-template-columns: 30% 70%; 
+              }
 
-                a {
-                    color: inherit;
-                    margin-left: 12px;
-                    display: list-item;
-                    width: 100%;
-                }
+              div {
+                border: 1px solid black;
+                padding: 2px;
+              }
+              
+              #metadata-slacolumn {
+                overflow: hidden;
+              }
+              
+              #metadata-refresh {
+                height: 200px;
+                overflow: auto;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 10px;
 
-                .category-card {
-                    padding-left: 12px;
-                    padding-right: 10px;
-                    flex: 1 1 0px;
-                    background-color: #ffffff;
-                    border-color: rgb(38, 48, 51);
-                    border-radius: 6px;
-                    border-bottom-width: 0px;
-                    border-left-width: 0px;
-                    border-right-width: 0px;
-                    box-shadow: rgba(0, 0, 0, 0.11) 0px 2px 12px, rgba(0, 0, 0, 0.04) 0px 1px 4px;
-                    padding-bottom: 10px;
-                }
-
-                .category-card-title {
-                    text-align: center;
-                    font-weight: 500;
-                    line-height: 2;
-                    color: rgb(38, 48, 51);
-                    font-size: 1.3rem;
-                }
+              }
             </style>
         `;
         this._visContainer = element.appendChild(document.createElement("div"));
@@ -67,155 +50,257 @@ const visObject = {
         }
 
         this._visContainer.innerHTML = "";
-        const firstLabel = queryResponse.fields.dimensions[0].name;
-        const secondLabel = queryResponse.fields.dimensions[1].name;
-        const thirdLabel = queryResponse.fields.dimensions[2].name;
 
-        let currentDashboardTitle = null;
+        let popup = document.createElement('div');
+        popup.style.position = 'absolute';
+        popup.style.visibility = 'hidden';
+        popup.style.backgroundColor = '#333';
+        popup.style.color = '#fff';
+        popup.style.padding = '10px';
+        popup.style.borderRadius = '5px';
+        this._visContainer.appendChild(popup);
 
-        if(queryResponse.fields.dimensions.length == 5) {
-            const fifthLabel = queryResponse.fields.dimensions[4].name;
-            let dashboardData = data.filter(row => row[fifthLabel].value == 1);
-            if(dashboardData.length > 0) {
-                dashboardData = dashboardData[0];
-                if(dashboardData[secondLabel].value != dashboardData[thirdLabel].value) {
-                    currentDashboardTitle = dashboardData[thirdLabel].value;
-                }
+        uptime_status_dates = [
+            {
+                date: '2023-12-03',
+                status: 'up'
+            },
+            {
+                date: '2023-12-04',
+                status: 'up'
+            },
+            {
+                date: '2023-12-05',
+                status: 'up'
+            },
+            {
+                date: '2023-12-06',
+                status: 'up'
+            },
+            {
+                date: '2023-12-07',
+                status: 'up'
+            },
+            {
+                date: '2023-12-08',
+                status: 'up'
+            },
+            {
+                date: '2023-12-09',
+                status: 'orange',
+                message: 'UTC 3 delayed by 1 hour'
+            },
+            {
+                date: '2023-12-10',
+                status: 'up'
+            },
+            {
+                date: '2023-12-11',
+                status: 'up'
+            },
+            {
+                date: '2023-12-12',
+                status: 'up'
+            },
+            {
+                date: '2023-12-13',
+                status: 'up'
+            },
+            {
+                date: '2023-12-14',
+                status: 'red',
+                message: 'UTC 3 delayed by 5 hours due to duplicates. Ref: DSC-1234'
+            },
+            {
+                date: '2023-12-15',
+                status: 'up'
+            },
+            {
+                date: '2023-12-16',
+                status: 'up'
+            },
+            {
+                date: '2023-12-17',
+                status: 'up'
+            },
+            {
+                date: '2023-12-18',
+                status: 'up'
+            },
+            {
+                date: '2023-12-19',
+                status: 'up'
+            }            
+        ]
+
+        table_refresh = [
+            {
+                "name": 'cooked.test_1',
+                "lastUpdated": "2023-12-19 11:00 UTC",
+            },
+            {
+                "name": 'cooked.test_2',
+                "lastUpdated": "2023-12-19 10:00 UTC",
+            },
+            {
+                "name": 'processed.test_1',
+                "lastUpdated": "2023-12-18 12:00 UTC",
+                "status": "red",
+                "message": "Expected delay from source"
+            },
+            {
+                "name": 'cooked.test_3',
+                "lastUpdated": "2023-12-19 05:00 UTC",
+            },
+            {
+                "name": 'cooked.test_4',
+                "lastUpdated": "2023-12-19 07:00 UTC",
+            },
+            {
+                "name": 'processed.test_10',
+                "lastUpdated": "2023-12-19 05:00 UTC",
+            },
+            {
+                "name": 'snapshot.test1',
+                "lastUpdated": "2023-12-19 11:00 UTC",
+            },
+            {
+                "name": 'snapshot.test_2',
+                "lastUpdated": "2023-12-19 07:00 UTC",
+            },
+            {
+                "name": 'snapshot.test_5',
+                "lastUpdated": "2023-12-19 11:00 UTC",
             }
-        }
+        ]
 
-        const transformedData = {}
-        const onlySummary = {}
+        dashboard_details = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu eleifend mauris. Ut eu elit diam. Aliquam mattis lorem in sapien imperdiet sodales. Ut ultricies sodales consectetur. Aenean quis justo eget dui efficitur viverra eget id odio. Maecenas faucibus quis nibh at semper. Suspendisse porta nibh arcu, a blandit lectus sodales in.`
 
-        data.forEach(row => {
-            const firstValue = row[firstLabel].value;
-            const secondValue = row[secondLabel].value;
-            const thirdValue = row[thirdLabel];
+        // Create main container
+        let container = document.createElement('div');
+        container.id = 'metadata'
+        container.style.display = 'grid';
 
-            if (!transformedData[firstValue]) {
-                transformedData[firstValue] = {};
-            }
+        // Create first column with two rows
+        let firstColumn = document.createElement('div');
+        firstColumn.id = 'metadata-slacolumn'
+        let firstRow = document.createElement('div');
+        let secondRow = document.createElement('div');
 
-            if (!transformedData[firstValue][secondValue]) {
-                transformedData[firstValue][secondValue] = [];
-            }
+        let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("width", "100%");
+        svg.setAttribute("height", "34px");
 
-            transformedData[firstValue][secondValue].push({
-                'thirdValue': thirdValue
-            });
-        });
+        // Define bar width and height
+        let barWidth = 100 / 15;
+        let barHeight = 100;
 
-        for (const key in transformedData) {
-            if (transformedData.hasOwnProperty(key)) {
-                const secondValues = Object.keys(transformedData[key]);
-                if (secondValues.length > 1) {
-                    onlySummary[key] = false;
-                }
-                else {
-                    onlySummary[key] = true;
-                }
-            }
-        }
-
-        const get_analytics_data = (url) => {
-
-            return {
-                "type": "events-general",
-                "indexType": "client-events",
-                "env": "beta",
-                "userId": "0",
-                "teamId": "0",
-                "property": "postman-web",
-                "timestamp": new Date().toISOString(),
-                "sessionId": "",
-                "category": "looker",
-                "action": "dashboard-load",
-                "meta": {
-                    "clickedLink": url,
-                    "currentDashboard": currentDashboardTitle,
-                }
-            }
-        }
-
-        const get_link = (val) => {
-            if (val['links'] && val['links'].length > 0) {
-                first_link = val['links'][0];
-                url = first_link['url'];
-                label = first_link['label'];
-
-                const anchorEle = document.createElement("a");
-                anchorEle.href = url;
-                anchorEle.target = "_blank";
-                anchorEle.rel = "noopener noreferrer";
-                anchorEle.title = label;
-
-                anchorEle.innerText = val['value'];
-                anchorEle.onclick = (e) => {
-                    e.preventDefault();
-                    fetch("https://events.getpostman-beta.com/events", {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        mode: "no-cors",
-                        body: btoa(JSON.stringify(get_analytics_data(url))),
-                    });
-                }
-
-                return [anchorEle, label];
-            }
-        }
-
-        for (const key in transformedData) {
-
-            const flexDiv = document.createElement("div");
-            flexDiv.setAttribute('class', 'category-card');
-
-            const flexDivTitle = document.createElement("div");
-            flexDivTitle.setAttribute('class', 'category-card-title');
-            flexDivTitle.innerText = key;
-            flexDiv.appendChild(flexDivTitle);
-
-            if (onlySummary[key]) {
-                const summaryValue = Object.keys(transformedData[key])[0];
-                transformedData[key][summaryValue].forEach(row => {
-                    const liElement = document.createElement("li");
-                    const [value, label] = get_link(row['thirdValue']);
-                    liElement.appendChild(value);
-                    liElement.title = label;
-                    flexDiv.appendChild(liElement);
-                });
+        let i = 0;
+        uptime_status_dates.forEach((status_val) => {
+            // Create rect SVG element
+            let rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rect.setAttribute("x", `${i * barWidth}%`);
+            rect.setAttribute("y", "0");
+            rect.setAttribute("width", `${barWidth-2}%`);
+            rect.setAttribute("height", `${barHeight}%`);
+          
+            // Set fill color based on uptime status
+            let uptimeStatus = status_val.status == 'up'
+            rect.setAttribute("fill", uptimeStatus ? "green" : "red");
+          
+            // Create title SVG element for hover popup
+            let title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+            let popupText = status_val.date + '\n';
+            if(uptimeStatus) {
+                popupText += "No downtime recorded on this day."
             }
             else {
-                for (const nestedKey in transformedData[key]) {
-                    const flexDetails = document.createElement("details");
-                    const flexSummary = document.createElement("summary");
-                    flexSummary.setAttribute("style", "list-style:None;");
-                    flexSummary.innerText = nestedKey;
-                    flexDetails.appendChild(flexSummary);
-
-                    const flexSummaryDiv = document.createElement("div");
-                    transformedData[key][nestedKey].forEach(row => {
-                        const liElement = document.createElement("li");
-                        const [value, label] = get_link(row['thirdValue']);
-                        liElement.appendChild(value);
-                        liElement.title = label;
-                        flexSummaryDiv.appendChild(liElement);
-
-                        if(currentDashboardTitle && currentDashboardTitle == row['thirdValue'].value) {
-                            flexDetails.setAttribute("open", "");
-                            liElement.setAttribute("style", "background-color: rgb(234, 235, 235);");
-                        }
-                    });
-                    flexDetails.appendChild(flexSummaryDiv);
-                    
-                   
-
-                    flexDiv.appendChild(flexDetails);
-                }
+                popupText += status_val['message'];
             }
-            this._visContainer.appendChild(flexDiv);
-        }
+          
+            // Append title to rect
+            rect.appendChild(title);
+
+            // Add mouseover event listener
+            rect.addEventListener('mouseover', (e) => {
+                // Update popup content
+                popup.textContent = popupText;
+
+                // Update popup position
+                let rect = e.target.getBoundingClientRect();
+                popup.style.left = `${rect.left}px`;
+                popup.style.top = `${rect.bottom}px`;
+
+                // Show popup
+                popup.style.visibility = 'visible';
+            });
+
+            // Add mouseout event listener
+            rect.addEventListener('mouseout', () => {
+                // Hide popup
+                popup.style.visibility = 'hidden';
+            });
+
+          
+            // Append rect to SVG
+            svg.appendChild(rect);
+
+            i+= 1
+
+            
+
+        });
+
+        firstRow.appendChild(svg);
+
+
+
+        secondRow.textContent = dashboard_details;
+        firstColumn.appendChild(firstRow);
+        firstColumn.appendChild(secondRow);
+
+        // Create second column with scrollable property
+        let secondColumn = document.createElement('div');
+        secondColumn.id = 'metadata-refresh'
+        secondColumn.style.overflowY = 'scroll';
+
+        table_refresh.forEach((table_details) => {
+            // Create card
+            let card = document.createElement('div');
+            card.style.border = '1px solid black';
+            card.style.padding = '10px';
+            card.style.textAlign = 'center';
+            card.style.width = '100px';
+
+            // Create title
+            let title = document.createElement('h3');
+            title.style.overflow = 'hidden';
+            title.style.textOverflow = ''
+            title.style.whiteSpace = 'nowrap';
+            title.textContent = table_details['name']; // Replace this with actual title
+
+            // Create last updated time
+            let lastUpdated = document.createElement('p');
+            lastUpdated.style.overflow = 'hidden';
+            lastUpdated.style.textOverflow = 'ellipsis';
+            lastUpdated.style.whiteSpace = 'nowrap';
+            lastUpdated.textContent = table_details['lastUpdated']; // Replace this with actual last updated time
+
+            // Append title and last updated time to card
+            card.appendChild(title);
+            card.appendChild(lastUpdated);
+
+            // Append card to grid
+            secondColumn.appendChild(card);
+        });
+
+
+        // Append columns to the container
+        container.appendChild(firstColumn);
+        container.appendChild(secondColumn);
+
+        // Append the container to the body
+        this._visContainer.appendChild(container);
 
         doneRendering();
     }
